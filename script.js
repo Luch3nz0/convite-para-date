@@ -1,7 +1,7 @@
 const STORAGE_KEY = "convite-date-ticket:v1";
 const INTRO_STEPS = [
   "Uma missão urbana e muito importante chegou até você. O prêmio final é raro, dourado e oficialmente charmoso.",
-  "Para desbloquear seu Date Ticket, basta acertar cinco perguntas. Sem pressa, sem drama, só elegância e um pouquinho de sorte.",
+  "Para desbloquear seu Date Ticket, basta acertar cinco perguntas. Divirta-se!",
 ];
 
 const QUESTIONS = [
@@ -63,6 +63,8 @@ const REPLY_MESSAGES = {
   yes: "Eu aceito oficialmente meu Date Ticket. Vamos marcar o resgate? 💛",
   negotiate: "Eu topo, mas quero negociar os detalhes do meu Date Ticket com você 😌",
 };
+
+const WHATSAPP_NUMBER = "5511999200415";
 
 const DEFAULT_STATE = {
   screen: "home",
@@ -349,34 +351,10 @@ async function handleReply(kind) {
     return;
   }
 
-  const fullMessage = `${message} ${window.location.href}`;
-
-  try {
-    await navigator.clipboard.writeText(fullMessage);
-  } catch (error) {
-    // Clipboard can fail outside secure contexts; the share/open fallback still works.
-  }
-
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: "Meu Date Ticket",
-        text: message,
-        url: window.location.href,
-      });
-
-      showToast("Mensagem pronta enviada para você compartilhar.", "success");
-      return;
-    } catch (error) {
-      if (error && error.name === "AbortError") {
-        return;
-      }
-    }
-  }
-
-  const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(fullMessage)}`;
+  const fullMessage = `${message}\n${window.location.href}`;
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(fullMessage)}`;
   window.open(url, "_blank", "noopener,noreferrer");
-  showToast("Mensagem pronta copiada e WhatsApp aberto.", "success");
+  showToast("WhatsApp aberto com a mensagem pronta.", "success");
 }
 
 function showToast(message, tone = "success") {
@@ -420,11 +398,6 @@ function renderHome() {
   app.innerHTML = `
     <main class="screen screen--home">
       <section class="layout layout--home">
-        <div class="badge-row">
-          <span class="badge">Centro de SP em pixel art</span>
-          <span class="badge">${state.ticketUnlocked ? "Ticket desbloqueado" : "5 perguntas oficiais"}</span>
-        </div>
-
         <article class="hero-card">
           <p class="eyebrow">Missão do coração</p>
           <h1 class="home-title">Convite para Date</h1>
@@ -437,11 +410,6 @@ function renderHome() {
               state.ticketUnlocked
                 ? '<button class="button button--secondary" type="button" data-action="view-ticket">Veja seu ticket</button>'
                 : ""
-            }
-            ${
-              hasProgress
-                ? '<p class="status-copy">Seu progresso ficou salvo. A missão reabre exatamente do ponto em que parou.</p>'
-                : '<p class="status-copy">Tudo fica salvo localmente no navegador. Se você ganhar uma vez, o ticket continua aqui.</p>'
             }
           </div>
         </article>
@@ -540,7 +508,6 @@ function renderQuiz() {
                       data-choice="${escapeAttribute(choice)}"
                     >
                       <span class="choice-label">${choice}</span>
-                      <span class="choice-subtle">Alternativa ${String.fromCharCode(65 + index)}</span>
                     </button>
                   `,
                 )
@@ -609,9 +576,6 @@ function renderSuccess() {
         <article class="panel">
           <p class="section-label">Prêmio raro</p>
           <h2 class="panel-title">Você desbloqueou seu Date Ticket.</h2>
-          <p class="panel-copy">
-            O dourado apareceu, girou e agora está oficialmente salvo no navegador. A partir daqui, a tela inicial também ganha o botão para ver o ticket quando quiser.
-          </p>
 
           <div class="ticket-stage">
             ${renderSparkles()}
