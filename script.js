@@ -59,12 +59,7 @@ const TICKET_PERKS = [
   "Bônus secreto liberado: bitocas",
 ];
 
-const REPLY_MESSAGES = {
-  yes: "Eu aceito oficialmente meu Date Ticket. Vamos marcar o resgate? 💛",
-  negotiate: "Eu topo, mas quero negociar os detalhes do meu Date Ticket com você 😌",
-};
-
-const WHATSAPP_NUMBER = "5511999200415";
+const INSTAGRAM_DM_URL = "https://ig.me/m/3ebc___";
 
 const DEFAULT_STATE = {
   screen: "home",
@@ -191,6 +186,10 @@ function sanitizeState(parsed) {
     merged.screen = "home";
   }
 
+  if (merged.screen === "fail") {
+    merged.screen = "home";
+  }
+
   if (
     typeof merged.currentQuestionIndex !== "number" ||
     merged.currentQuestionIndex < 0 ||
@@ -294,16 +293,9 @@ function handleAnswer(choice) {
   const correct = choice === question.correctAnswer;
 
   if (!correct) {
-    showToast("Quase. O ticket escapou dessa vez.", "error");
+    showToast("Paatz, não é essa, tenta de novo.", "error");
     state.lastResult = "fail";
-    state.gameStarted = false;
-    state.quizCompleted = false;
-    state.currentQuestionIndex = 0;
-    state.introStep = 0;
-    state.screen = "fail";
     persist();
-
-    window.setTimeout(render, 420);
     return;
   }
 
@@ -344,17 +336,8 @@ function resetProgress() {
   render();
 }
 
-async function handleReply(kind) {
-  const message = REPLY_MESSAGES[kind];
-
-  if (!message) {
-    return;
-  }
-
-  const fullMessage = `${message}\n${window.location.href}`;
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(fullMessage)}`;
-  window.open(url, "_blank", "noopener,noreferrer");
-  showToast("WhatsApp aberto com a mensagem pronta.", "success");
+async function handleReply() {
+  window.open(INSTAGRAM_DM_URL, "_blank", "noopener,noreferrer");
 }
 
 function showToast(message, tone = "success") {
@@ -641,7 +624,7 @@ function renderTicket() {
             </button>
           </div>
 
-          <p class="ticket-note">Os botões abaixo já deixam a mensagem pronta para compartilhar no WhatsApp.</p>
+          <p class="ticket-note">Os botões abaixo abrem seu DM no Instagram.</p>
 
           <div class="actions">
             <button class="button button--primary" type="button" data-action="reply" data-reply-kind="yes">Sim, eu topo</button>
