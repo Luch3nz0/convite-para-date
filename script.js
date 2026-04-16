@@ -1,6 +1,6 @@
 const STORAGE_KEY = "convite-date-ticket:v1";
 const INTRO_STEPS = [
-  "Uma missão urbana e muito importante chegou até você. O prêmio final é raro, dourado e oficialmente charmoso.",
+  "Uma missão urbana e muito importante chegou até você. O prêmio é uma surpresa cheia de delícias a serem devoradas!",
   "Para desbloquear seu Date Ticket, basta acertar cinco perguntas. Divirta-se!",
 ];
 
@@ -17,6 +17,7 @@ const QUESTIONS = [
     id: 2,
     prompt: "Qual é o nome deste mosaico bizantino?",
     image: "./imperadorjustiano.png",
+    frameClass: "question-figure--wide",
     choices: [
       "Imperador Justiniano e sua comitiva",
       "Imperatriz Teodora e sua corte",
@@ -32,7 +33,6 @@ const QUESTIONS = [
     choices: ["Partenope", "Lighea", "Aretusa"],
     correctAnswer: "Partenope",
     feedback: "Perfetto. Napoli aprovou oficialmente esse acerto.",
-    note: "Essa pergunta aparece em italiano de propósito, para manter o charme.",
   },
   {
     id: 4,
@@ -46,6 +46,7 @@ const QUESTIONS = [
     id: 5,
     prompt: "Qual é o nome deste filme?",
     image: "./7thseal.png",
+    frameClass: "question-figure--wide",
     choices: ["O Sétimo Selo", "Morangos Silvestres", "Persona"],
     correctAnswer: "O Sétimo Selo",
     feedback: "Xeque-mate no quiz. O Date Ticket foi desbloqueado.",
@@ -382,7 +383,6 @@ function renderHome() {
     <main class="screen screen--home">
       <section class="layout layout--home">
         <article class="hero-card">
-          <p class="eyebrow">Missão do coração</p>
           <h1 class="home-title">Convite para Date</h1>
           <p class="home-copy">
             Um mini desafio fofo, urbano e elegante. Acerte as cinco perguntas e desbloqueie o seu Date Ticket dourado.
@@ -413,19 +413,10 @@ function renderIntro() {
   app.innerHTML = `
     <main class="screen screen--panel">
       <section class="layout">
-        <div class="badge-row">
-          <span class="badge">Introdução ${Math.min(state.introStep + 1, INTRO_STEPS.length)}/${INTRO_STEPS.length}</span>
-          <span class="badge">Desbloqueio dourado</span>
-        </div>
-
         <article class="dialogue-box">
           <div class="dialogue-head">
-            <div class="dialogue-avatar">
-              <img src="./dateticket_pixelart.png" alt="Ticket dourado em pixel art" class="pixel-art" />
-            </div>
             <div>
-              <p class="dialogue-name">Central do Ticket</p>
-              <p class="dialogue-role">narradora oficial da missão</p>
+              <p class="dialogue-name">Introdução</p>
             </div>
           </div>
 
@@ -461,10 +452,6 @@ function renderQuiz() {
       <section class="layout">
         <article class="question-card">
           <header class="topbar">
-            <div>
-              <p class="progress-text">Pergunta ${state.currentQuestionIndex + 1} de ${QUESTIONS.length}</p>
-              <p class="question-kicker">Só quem acerta tudo leva o ticket</p>
-            </div>
             <div class="hearts" aria-label="Progresso em corações">
               ${Array.from({ length: QUESTIONS.length }, (_, index) => `
                 <span class="heart ${index < completed ? "heart--filled" : ""}">${index < completed ? "❤" : "♡"}</span>
@@ -472,13 +459,12 @@ function renderQuiz() {
             </div>
           </header>
 
-          <figure class="question-figure">
+          <figure class="question-figure ${question.frameClass ?? ""}">
             <img src="${question.image}" alt="${question.prompt}" class="pixel-art" />
           </figure>
 
           <div class="question-body">
             <h2 class="question-title">${question.prompt}</h2>
-            ${question.note ? `<p class="question-note">${question.note}</p>` : ""}
 
             <div class="choice-list">
               ${orderedChoices
@@ -551,13 +537,7 @@ function renderSuccess() {
   app.innerHTML = `
     <main class="screen screen--panel">
       <section class="layout">
-        <div class="badge-row">
-          <span class="badge">Parabéns</span>
-          <span class="badge">Date Ticket desbloqueado</span>
-        </div>
-
         <article class="panel">
-          <p class="section-label">Prêmio raro</p>
           <h2 class="panel-title">Você desbloqueou seu Date Ticket.</h2>
 
           <div class="ticket-stage">
@@ -593,16 +573,10 @@ function renderTicket() {
   app.innerHTML = `
     <main class="screen screen--panel">
       <section class="layout">
-        <div class="badge-row">
-          <span class="badge">Ticket permanente</span>
-          <span class="badge">toque para virar</span>
-        </div>
-
         <article class="ticket-panel">
-          <p class="section-label">Convite oficial</p>
           <h2 class="ticket-title">Seu prêmio já pode ser resgatado.</h2>
           <p class="ticket-copy">
-            Este ticket foi emitido para um date aconchegante, cinematográfico e nitidamente pensado com carinho. Toque nele para ver o verso.
+            Este ticket foi emitido para um date aconchegante, cinematográfico, cheio de carinho e comida!
           </p>
 
           <div class="ticket-stage">
@@ -623,8 +597,6 @@ function renderTicket() {
               </div>
             </button>
           </div>
-
-          <p class="ticket-note">Os botões abaixo abrem seu DM no Instagram.</p>
 
           <div class="actions">
             <button class="button button--primary" type="button" data-action="reply" data-reply-kind="yes">Sim, eu topo</button>
