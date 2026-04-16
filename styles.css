@@ -134,6 +134,7 @@ img {
 
 .badge-row,
 .ticket-actions {
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -192,6 +193,7 @@ img {
 .hero-card {
   padding: 28px 22px 24px;
   backdrop-filter: blur(6px);
+  text-align: center;
 }
 
 .eyebrow,
@@ -227,6 +229,7 @@ img {
   margin: 0;
   color: rgba(255, 240, 220, 0.72);
   font-size: 0.9rem;
+  text-align: center;
 }
 
 .actions {
@@ -287,7 +290,7 @@ img {
     linear-gradient(180deg, rgba(255, 248, 240, 0.1), rgba(255, 248, 240, 0.06)),
     rgba(24, 15, 30, 0.8);
   border: 2px solid rgba(255, 233, 204, 0.1);
-  text-align: left;
+  text-align: center;
 }
 
 .button:hover,
@@ -305,9 +308,11 @@ img {
 
 .topbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
   gap: 12px;
+  text-align: center;
 }
 
 .progress-text {
@@ -346,6 +351,7 @@ img {
 .ticket-panel,
 .dialogue-box {
   padding: 18px;
+  text-align: center;
 }
 
 .question-figure {
@@ -453,7 +459,10 @@ img {
 .dialogue-head {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   gap: 14px;
+  text-align: center;
 }
 
 .dialogue-name {
@@ -532,10 +541,12 @@ img {
 }
 
 .ticket-face--back {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 18px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
+  padding: 14px 12px 12px;
   color: #341800;
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.36), transparent 26%),
@@ -547,13 +558,13 @@ img {
 .ticket-face--back::after {
   content: "";
   position: absolute;
-  inset: 14px;
+  inset: 11px;
   border-radius: 18px;
   border: 2px solid rgba(131, 72, 0, 0.2);
 }
 
 .ticket-face--back::after {
-  inset: auto 14px 74px;
+  inset: auto 11px 55px;
   height: 0;
   border-top: 2px dashed rgba(108, 54, 0, 0.32);
   border-right: 0;
@@ -565,53 +576,65 @@ img {
 .ticket-headline {
   position: relative;
   z-index: 1;
+  width: 100%;
+  text-align: center;
 }
 
 .ticket-mini {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .ticket-title--back {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   font-family: "Silkscreen", monospace;
-  font-size: clamp(1.2rem, 5vw, 1.55rem);
-  line-height: 1.4;
+  font-size: clamp(1rem, 4.2vw, 1.28rem);
+  line-height: 1.28;
 }
 
 .ticket-perks {
   position: relative;
   z-index: 1;
   flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: calc(100% - 8px);
+  gap: 6px;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
 .ticket-perks li {
-  padding: 10px 12px;
-  border-radius: 14px;
+  padding: 7px 9px;
+  border-radius: 12px;
   background: rgba(255, 248, 226, 0.42);
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: clamp(0.68rem, 2.5vw, 0.82rem);
+  line-height: 1.2;
+  text-align: center;
 }
 
 .ticket-stamp {
   position: relative;
   z-index: 1;
-  align-self: flex-end;
+  align-self: center;
   border: 2px dashed rgba(99, 55, 7, 0.46);
   border-radius: 16px;
-  padding: 8px 14px;
+  padding: 6px 10px;
   font-family: "Silkscreen", monospace;
-  font-size: 0.78rem;
-  transform: rotate(-6deg);
+  font-size: 0.62rem;
+  line-height: 1.2;
+  text-align: center;
+  transform: rotate(-4deg);
 }
 
 .ticket-copy {
   margin-top: 4px;
+  text-align: center;
 }
 
 .ticket-note {
