@@ -384,9 +384,6 @@ function renderHome() {
       <section class="layout layout--home">
         <article class="hero-card">
           <h1 class="home-title">Convite para Date</h1>
-          <p class="home-copy">
-            Um mini desafio fofo, urbano e elegante. Acerte as cinco perguntas e desbloqueie o seu Date Ticket dourado.
-          </p>
           <div class="actions">
             <button class="button button--primary" type="button" data-action="start-game">${mainCta}</button>
             ${
@@ -540,7 +537,7 @@ function renderSuccess() {
         <article class="panel">
           <h2 class="panel-title">Você desbloqueou seu Date Ticket.</h2>
 
-          <div class="ticket-stage">
+          <div class="ticket-stage ticket-stage--success">
             ${renderSparkles()}
             <div class="ticket-card ticket-card--animated">
               <div class="ticket-face">
@@ -581,7 +578,7 @@ function renderTicket() {
 
           <div class="ticket-stage">
             ${renderSparkles()}
-            <button class="ticket-card" type="button" data-action="flip-ticket" data-ticket aria-label="Virar ticket">
+            <button class="ticket-card ticket-card--interactive" type="button" data-action="flip-ticket" data-ticket aria-label="Virar ticket">
               <div class="ticket-face">
                 <img src="./dateticket_pixelart.png" alt="Frente do ticket dourado" class="pixel-art" />
               </div>
